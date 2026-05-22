@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 
+const API_URL = "https://careercampus-lwpa.onrender.com";
+
 function App() {
   const [messages, setMessages] = useState([
     { role: 'ai', content: "Hello! I'm CareerCompass, your AI career advisor. How can I help you with your professional journey today?" }
@@ -26,7 +28,7 @@ function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/api/chat', {
+      const response = await fetch(`${API_URL}/api/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
