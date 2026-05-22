@@ -8,18 +8,28 @@ CareerCompass AI is a production-ready AI-powered career guidance chatbot that h
 - Interview Preparation
 - Skill Roadmaps
 - Professional Advice
-- Clean Full-Stack Architecture
+- Secure & Structured Responses
 
 ## Tech Stack
 - React.js
-- Node.js / Express
+- FastAPI
 - Generative AI API
-- MongoDB
 
 ## Run Locally
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/chaitany141/careerCampus
 cd project-folder
+
+**Backend**
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload
+
+**Frontend**
+cd frontend
 npm install
 npm run dev
+
+Author
+Chaitanya Pawar
