@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 
-const API_URL = "https://careercampus-lwpa.onrender.com";
+const API_URL = import.meta.env.VITE_API_URL; 
 
 function App() {
   const [messages, setMessages] = useState([
