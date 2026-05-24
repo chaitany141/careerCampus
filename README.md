@@ -2,7 +2,7 @@
 
 CareerCompass AI is a production-ready AI-powered career guidance chatbot that helps users with resume reviews, interview preparation, career planning, skill development, and professional growth guidance.
 
-**Live Link****:** https://career-campus-ruddy.vercel.app/
+**Live Link:** https://career-campus-ruddy.vercel.app/
 
 ## Features
 - AI Career Guidance
