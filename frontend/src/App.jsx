@@ -23,7 +23,7 @@ function App() {
     } else {
       // First time in this session, show welcome message
       const welcomeMessage = [
-        { role: 'ai', content: "Hello! I'm CareerCompass, your AI career advisor. How can I help you with your professional journey today?" }
+        { role: 'ai', content: "Hello! I'm CareerCompass, your personalised career advisor. How can I help you with your professional journey today?" }
       ];
       setMessages(welcomeMessage);
       sessionStorage.setItem(`messages_${sessionId}`, JSON.stringify(welcomeMessage));
@@ -110,7 +110,7 @@ function App() {
         </div>
         <div className="header-title">
           <h1>CareerCompass</h1>
-          <p>Your AI Career Advisor</p>
+          <p>Your Personalised Career Advisor</p>
         </div>
       </header>
       
