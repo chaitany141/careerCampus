@@ -3,12 +3,32 @@ import { useState, useRef, useEffect } from 'react'
 const API_URL = import.meta.env.VITE_API_URL; 
 
 function App() {
-  const [messages, setMessages] = useState([
-    { role: 'ai', content: "Hello! I'm CareerCompass, your AI career advisor. How can I help you with your professional journey today?" }
-  ]);
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [sessionId] = useState(() => {
+    // Generate unique session ID for this page load
+    return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  });
   const messagesEndRef = useRef(null);
+
+  // Initialize session storage on component mount
+  useEffect(() => {
+    // Check if there are stored messages in sessionStorage for this session
+    const storedMessages = sessionStorage.getItem(`messages_${sessionId}`);
+    
+    if (storedMessages) {
+      // Load previous messages from this session
+      setMessages(JSON.parse(storedMessages));
+    } else {
+      // First time in this session, show welcome message
+      const welcomeMessage = [
+        { role: 'ai', content: "Hello! I'm CareerCompass, your AI career advisor. How can I help you with your professional journey today?" }
+      ];
+      setMessages(welcomeMessage);
+      sessionStorage.setItem(`messages_${sessionId}`, JSON.stringify(welcomeMessage));
+    }
+  }, [sessionId]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -24,7 +44,14 @@ function App() {
 
     const userMessage = input.trim();
     setInput('');
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
+    
+    // Add user message to state and sessionStorage
+    setMessages(prev => {
+      const updated = [...prev, { role: 'user', content: userMessage }];
+      sessionStorage.setItem(`messages_${sessionId}`, JSON.stringify(updated));
+      return updated;
+    });
+    
     setIsLoading(true);
 
     try {
@@ -33,7 +60,7 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: userMessage }),
+        body: JSON.stringify({ message: userMessage, session_id: sessionId }),
       });
 
       if (!response.ok) {
@@ -41,13 +68,23 @@ function App() {
       }
 
       const data = await response.json();
-      setMessages(prev => [...prev, { role: 'ai', content: data.reply }]);
+      
+      // Add AI response to state and sessionStorage
+      setMessages(prev => {
+        const updated = [...prev, { role: 'ai', content: data.reply }];
+        sessionStorage.setItem(`messages_${sessionId}`, JSON.stringify(updated));
+        return updated;
+      });
     } catch (error) {
       console.error('Error:', error);
-      setMessages(prev => [...prev, { 
-        role: 'ai', 
-        content: "I'm sorry, I'm having trouble connecting to the server right now. Please ensure the backend is running and the API key is set." 
-      }]);
+      const errorMessage = "I'm sorry, I'm having trouble connecting to the server right now. Please ensure the backend is running and the API key is set.";
+      
+      // Add error message to state and sessionStorage
+      setMessages(prev => {
+        const updated = [...prev, { role: 'ai', content: errorMessage }];
+        sessionStorage.setItem(`messages_${sessionId}`, JSON.stringify(updated));
+        return updated;
+      });
     } finally {
       setIsLoading(false);
     }
