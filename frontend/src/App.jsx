@@ -103,7 +103,7 @@ function App() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask for career advice, resume tips, or interview prep..."
+            placeholder="Ask for career advice in any field..."
             className="chat-input"
             disabled={isLoading}
           />
@@ -115,6 +115,8 @@ function App() {
           </button>
         </div>
       </form>
+
+    
     </div>
   )
 }

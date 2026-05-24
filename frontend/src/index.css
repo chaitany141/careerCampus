@@ -266,3 +266,14 @@ body {
   0%, 80%, 100% { transform: scale(0); }
   40% { transform: scale(1); }
 }
+
+/* Footer Styles */
+.chat-footer {
+  padding: 0.75rem 1.5rem;
+  text-align: center;
+  font-size: 0.70rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--glass-border);
+  background: rgba(245, 243, 240, 0.3);
+  letter-spacing: 0.3px;
+}
